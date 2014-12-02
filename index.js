@@ -1,4 +1,5 @@
 module.exports = function(opts) {
+  var customFileName = '';
   var path = require('path'),
     fs = require('fs'),
     lwip = require('lwip'),
@@ -143,7 +144,8 @@ module.exports = function(opts) {
     return ' (' + ((parseInt(index, 10) || 0) + 1) + ')' + (ext || '');
   };
   var FileInfo = function(file) {
-    this.name = file.name;
+    //this.name = file.name;
+    this.name = customFileName;
     this.size = file.size;
     this.type = file.type;
     this.modified = file.lastMod;
@@ -260,7 +262,8 @@ module.exports = function(opts) {
   };
 
 
-  fileUploader.post = function(req, res, callback) {
+  fileUploader.post = function(req, res,encryptedFileName, callback) {
+    customFileName =encryptedFileName;
     setNoCacheHeaders(res);
     var form = new formidable.IncomingForm(),
       tmpFiles = [],
